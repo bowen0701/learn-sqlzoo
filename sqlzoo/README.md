@@ -1,3 +1,3 @@
 # SQLZOO Practices
 
-This folder is to collect my solutions to SQLZOO tutorials.
+This folder is to collect my anwsers to SQLZOO tutorials.

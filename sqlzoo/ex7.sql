@@ -160,7 +160,7 @@ WHERE id IN
               (SELECT id
                FROM actor
                WHERE name = 'Art Garfunkel')))
-AND id NOT IN 
+AND id <> 
     (SELECT id
      FROM actor
      WHERE name = 'Art Garfunkel')

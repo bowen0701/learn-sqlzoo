@@ -137,7 +137,7 @@ ON (a.actorid = b.id)
 ORDER BY b.name
 
 /* Ex14. List the films released in the year 1978 ordered by the 
-number of actors in the cast, then by title.*/
+number of actors in the cast, then by title. */
 SELECT a.title, b.actor_cnt
 FROM movie a
 JOIN

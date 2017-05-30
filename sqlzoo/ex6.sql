@@ -1,4 +1,5 @@
-/* SQLZOO: 6 JOIN */
+/* SQLZOO: 6 JOIN:
+http://sqlzoo.net/wiki/The_JOIN_operation */
 
 /* Ex1. 1.
 Modify it to show the matchid and player name for 

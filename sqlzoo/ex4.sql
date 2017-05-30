@@ -1,4 +1,5 @@
-/* SQLZOO: 4 SELECT within SELECT */
+/* SQLZOO: 4 SELECT within SELECT:
+http://sqlzoo.net/wiki/SELECT_within_SELECT_Tutorial */
 
 /* List each country name where the population is 
 larger than that of 'Russia'. */

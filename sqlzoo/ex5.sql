@@ -1,4 +1,5 @@
-/* SQLZOO: 5 SUM and COUNT */
+/* SQLZOO: 5 SUM and COUNT:
+http://sqlzoo.net/wiki/SUM_and_COUNT */
 
 /* Ex1. Show the total population of the world. */
 SELECT SUM(population)

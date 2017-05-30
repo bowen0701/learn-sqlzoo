@@ -1,4 +1,5 @@
-/* SQLZOO: 1 SELECT name */
+/* SQLZOO: 1 SELECT name:
+http://sqlzoo.net/wiki/SELECT_names */
 
 /* Ex1. You can use WHERE name LIKE 'B%' to 
 find the countries that start with "B".

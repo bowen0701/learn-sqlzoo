@@ -1,4 +1,5 @@
-/* SQLZOO: 2 SELECT from World */
+/* SQLZOO: 2 SELECT from World: 
+http://sqlzoo.net/wiki/SELECT_from_WORLD_Tutorial */
 
 /* Ex1. Read the notes about this table. 
 Observe the result of running this SQL command to show the 

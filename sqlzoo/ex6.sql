@@ -133,7 +133,9 @@ If it was a team1 goal then a 1 appears in score1,
 otherwise there is a 0. 
 You could SUM this column to get a count of the goals scored by team1. 
 Sort your result by mdate, team1 and team2. */
-SELECT a.mdate, a.team1, SUM(CASE WHEN a.team1 = b.teamid THEN 1 ELSE 0 END) AS score1, a.team2, SUM(CASE WHEN a.team2 = b.teamid THEN 1 ELSE 0 END) AS score2
+SELECT a.mdate, 
+       a.team1, SUM(CASE WHEN a.team1 = b.teamid THEN 1 ELSE 0 END) AS score1, 
+       a.team2, SUM(CASE WHEN a.team2 = b.teamid THEN 1 ELSE 0 END) AS score2
 FROM game a
 LEFT JOIN goal b
 ON (a.id = b.matchid)

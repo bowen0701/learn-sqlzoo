@@ -1,4 +1,5 @@
-/* SQLZOO: 0 SELECT basics */
+/* SQLZOO: 0 SELECT basics:
+http://sqlzoo.net/wiki/SELECT_basics */
 
 /* Ex1. The example uses a WHERE clause to show the population of 'France'. 
 Note that strings (pieces of text that are data) should be in 'single quotes';

@@ -1,3 +1,3 @@
-# SQL Hands-On
+# SQLZOO Practices
 
-This repo is to collect my hands-on SQL practices.
+This folder is to collect my practices for [SQLZOO tutorials](http://sqlzoo.net/wiki/SQL_Tutorial), from which I re-learn a lot about SQL. :-)

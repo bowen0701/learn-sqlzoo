@@ -10,8 +10,8 @@ WHERE yr = 1950
 /* Ex2. Show who won the 1962 prize for Literature. */
 SELECT winner
 FROM nobel
-WHERE yr = 1962 
-AND subject = 'Literature'
+WHERE yr = 1962
+  AND subject = 'Literature'
 
 /* Ex3. Show the year and subject that won 'Albert Einstein' his prize. */
 SELECT yr, subject
@@ -22,26 +22,26 @@ WHERE winner = 'Albert Einstein'
 including 2000. */
 SELECT winner
 FROM nobel
-WHERE subject = 'Peace' 
-AND yr >= 2000
+WHERE subject = 'Peace'
+  AND yr >= 2000
 
 /* Ex5. Show all details (yr, subject, winner) of the 
 Literature prize winners for 1980 to 1989 inclusive. */
 SELECT yr, subject, winner
 FROM nobel
-WHERE subject = 'Literature'
-AND (yr >= 1980 AND yr <= 1989)
+WHERE subject = 'Literature' 
+  AND yr BETWEEN 1980 AND 1989
 
 /* Ex6. Show all details of the presidential winners:
 - Theodore Roosevelt
 - Woodrow Wilson
 - Jimmy Carter
 - Barack Obama */
-SELECT yr, subject, winner
+SELECT * 
 FROM nobel
-WHERE winner in 
-('Theodore Roosevelt', 'Woodrow Wilson',
- 'Jimmy Carter', 'Barack Obama')
+WHERE winner IN 
+  ('Theodore Roosevelt', 'Woodrow Wilson',
+   'Jimmy Carter', 'Barack Obama')
 
 /* Ex7. Show the winners with first name John. */
 SELECT winner
@@ -52,39 +52,39 @@ WHERE winner LIKE 'John %'
 Chemistry winners for 1984. */
 SELECT yr, subject, winner
 FROM nobel
-WHERE (yr = 1980 AND subject = 'Physics')
-OR (yr = 1984 AND subject = 'Chemistry')
+WHERE (subject = 'Physics' AND yr = 1980)
+  OR (subject = 'Chemistry' AND yr = 1984)
 
 /* Ex9. Show the winners for 1980 excluding the Chemistry and Medicine. */
 SELECT yr, subject, winner
 FROM nobel
-WHERE yr = 1980 
-AND subject NOT IN ('Chemistry', 'Medicine')
+WHERE yr = 1980
+  AND subject NOT IN ('Chemistry', 'Medicine')
 
 /* Ex10. Show who won a 'Medicine' prize in an early year 
 (before 1910, not including 1910) together with winners of a 
 'Literature' prize in a later year (after 2004, including 2004) */
 SELECT yr, subject, winner
-FROM nobel 
+FROM nobel
 WHERE (subject = 'Medicine' AND yr < 1910)
-OR (subject = 'Literature' AND yr >= 2004)
+  OR (subject = 'Literature' AND yr >= 2004)
 
 /* Ex11. Find all details of the prize won by PETER GRÜNBERG. */
-SELECT yr, subject, winner
+SELECT *
 FROM nobel
-WHERE winner = 'PETER GRÜNBERG'
+WHERE winner = 'Peter Grünberg'
 
 /* Ex12. Find all details of the prize won by EUGENE O'NEILL. */
-SELECT yr, subject, winner
+SELECT *
 FROM nobel
-WHERE winner = 'EUGENE O''NEILL'
+WHERE winner = 'Eugene O''neill'
 
 /* Ex13. Knights in order
 List the winners, year and subject where the winner starts with Sir. 
 Show the the most recent first, then by name order. */
 SELECT winner, yr, subject
 FROM nobel
-WHERE winner LIKE 'Sir%'
+WHERE winner LIKE 'Sir %'
 ORDER BY yr DESC, winner
 
 /* Ex14. The expression subject IN ('Chemistry','Physics') 
@@ -93,6 +93,5 @@ Show the 1984 winners and subject ordered by
 subject and winner name; but list Chemistry and Physics last. */
 SELECT winner, subject
 FROM nobel
-WHERE yr = 1984
-ORDER BY subject IN ('Physics','Chemistry'), subject, winner
-
+WHERE yr=1984
+ORDER BY subject IN ('Physics', 'Chemistry'), subject, winner

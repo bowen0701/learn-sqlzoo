@@ -16,21 +16,23 @@ WHERE population >= 2E8
 
 /* Ex3. Give the name and the per capita GDP for those 
 countries with a population of at least 200 million. */
-SELECT name, gdp / population AS per_capita_GDP
+SELECT name, gdp / population AS per_capita_gdp
 FROM world
 WHERE population >= 2E8
 
 /* Ex4. Show the name and population in millions for the 
 countries of the continent 'South America'. 
 Divide the population by 1000000 to get population in millions. */
-SELECT name, population / 1E6 AS pop_in_millions
+SELECT 
+  name, 
+  CAST(ROUND(population / 1E6, 4) AS DECIMAL(65, 4)) AS population_millions
 FROM world
 WHERE continent = 'South America'
 
 /* Ex5. Show the name and population for France, Germany, Italy. */
 SELECT name, population
 FROM world
-WHERE name in ('France', 'Germany', 'Italy')
+WHERE name IN ('France', 'Germany', 'Italy')
 
 /* Ex6. Show the countries which have a name that includes the word 'United'. */
 SELECT name
@@ -55,16 +57,17 @@ China has a big population and big area, it should be excluded.
 United Kingdom has a small population and a small area, it should be excluded. */
 SELECT name, population, area
 FROM world
-WHERE area > 3000000 XOR population > 250000000
+WHERE area > 3E6 OR population > 2.5E8
 
 /* Ex9. Show the name and population in millions and the 
 GDP in billions for the countries of the continent 'South America'. 
 Use the ROUND function to show the values to two decimal places.
 For South America show population in millions and GDP in billions 
 both to 2 decimal places. */
-SELECT name, 
-       ROUND(population / 1E6, 2) AS pop_in_m, 
-       ROUND(gdp / 1E9, 2) AS pdp_in_b
+SELECT 
+  name, 
+  CAST(ROUND(population / 1E6, 2) AS DECIMAL(65, 2)) AS population_millions,
+  CAST(ROUND(gdp / 1E9, 2) AS DECIMAL(65, 2)) AS gdp_billions
 FROM world
 WHERE continent = 'South America'
 
@@ -72,7 +75,9 @@ WHERE continent = 'South America'
 GDP of at least one trillion (1000000000000; that is 12 zeros). 
 Round this value to the nearest 1000.
 Show per-capita GDP for the trillion dollar countries to the nearest $1000. */
-SELECT name, ROUND(gdp / population, -3) AS per_capita_gdp
+SELECT 
+  name,
+  ROUND(gdp / population, -3) AS per_capita_gdp
 FROM world
 WHERE gdp > 1E12
 
@@ -93,7 +98,8 @@ You can use the function LEFT to isolate the first character.
 You can use <> as the NOT EQUALS operator. */
 SELECT name, capital
 FROM world
-WHERE LEFT(name, 1) = LEFT(capital, 1) AND name <> capital
+WHERE LEFT(name, 1) = LEFT(capital, 1)
+  AND name <> capital
 
 /* Ex13. Equatorial Guinea and Dominican Republic have 
 all of the vowels (a e i o u) in the name. 
@@ -105,9 +111,10 @@ The query shown misses countries like Bahamas and Belarus
 because they contain at least one 'a'. */
 SELECT name
 FROM world
-WHERE name NOT LIKE '% %' 
-AND name LIKE '%a%'
-AND name LIKE '%e%'
-AND name LIKE '%i%'
-AND name LIKE '%o%'
-AND name LIKE '%u%'
+WHERE 
+  name LIKE '%a%'
+    AND name LIKE '%e%'
+    AND name LIKE '%i%'
+    AND name LIKE '%o%'
+    AND name LIKE '%u%'
+    AND name NOT LIKE '% %'

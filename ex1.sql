@@ -45,7 +45,6 @@ SELECT name
 FROM world
 WHERE name LIKE '%a%a%a%'
 
-
 /* Ex8. India and Angola have an n as the second character. 
 You can use the underscore as a single character wildcard.
  SELECT name FROM world
@@ -99,7 +98,7 @@ same as the country. */
 SELECT name, capital
 FROM world
 WHERE capital LIKE CONCAT('%', name, '%')
-AND LENGTH(capital) > LENGTH(name)
+  AND LENGTH(capital) > LENGTH(name)
 
 /* Ex15. For Monaco-Ville the name is Monaco and the extension is -Ville.
 Show the name and the extension where the capital is an 
@@ -108,5 +107,4 @@ You can use the SQL function REPLACE. */
 SELECT name, REPLACE(capital, name, '') AS ext
 FROM world
 WHERE capital LIKE CONCAT('%', name, '%')
-AND LENGTH(capital) > LENGTH(name)
-
+  AND LENGTH(capital) > LENGTH(name)

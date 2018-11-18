@@ -13,7 +13,6 @@ FROM world
 SELECT SUM(gdp)
 FROM world
 WHERE continent = 'Africa'
-GROUP BY continent
 
 /* Ex4. How many countries have an area of at least 1000000. */
 SELECT COUNT(name)
@@ -24,7 +23,7 @@ WHERE area >= 1E6
 ('Estonia', 'Latvia', 'Lithuania')*/
 SELECT SUM(population)
 FROM world
-WHERE name in ('Estonia', 'Latvia', 'Lithuania')
+WHERE name IN ('Estonia', 'Latvia', 'Lithuania')
 
 /* Ex6. For each continent show the continent and number of countries. */
 SELECT continent, COUNT(name)
@@ -44,8 +43,3 @@ SELECT continent
 FROM world
 GROUP BY continent
 Having SUM(population) >= 1E8
-
-
-
-
-

@@ -97,9 +97,10 @@ WHERE continent IN (
   SELECT continent
   FROM world x
   WHERE 
-    (SELECT MAX(population) FROM world y 
-     WHERE y.continent = x.continent) 
-     <= 2.5E7)
+    2.5E7 >= ALL(
+      SELECT population 
+      FROM world y 
+      WHERE y.continent = x.continent))
 
 /* Ex10. Some countries have populations more than three times that 
 of any of their neighbours (in the same continent). 

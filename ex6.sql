@@ -30,50 +30,45 @@ the id from goal must match matchid from game.
 (If we wanted to be more clear/specific we could say 
     ON (game.id=goal.matchid)
 Modify it to show the player, teamid, stadium and mdate for every German goal. */
-SELECT a.player, a.teamid, b.stadium, b.mdate
-FROM goal a
-JOIN game b 
-ON (a.matchid = b.id)
-WHERE a. teamid = 'Ger'
+SELECT player, teamid, stadium, mdate
+FROM game JOIN goal 
+ON id = matchid
+WHERE teamid = 'GER'
 
 /* Ex4. Use the same JOIN as in the previous question.
 Show the team1, team2 and player for every goal scored 
 by a player called Mario player LIKE 'Mario%' */
-SELECT b.team1, b.team2, a.player
-FROM goal a
-JOIN game b
-ON (a.matchid = b.id)
-WHERE a.player LIKE 'Mario%'
+SELECT team1, team2, player
+FROM game JOIN goal
+ON id = matchid
+WHERE player LIKE 'Mario%'
 
 /* Ex5. The table eteam gives details of every national team 
 including the coach. You can JOIN goal to eteam using the phrase 
 goal JOIN eteam on teamid=id. 
 Show player, teamid, coach, gtime for all goals scored 
 in the first 10 minutes gtime<=10. */
-SELECT a.player, a.teamid, b.coach, a.gtime
-FROM goal a 
-JOIN eteam b
-ON (a.teamid = b.id)
-WHERE a.gtime <= 10
+SELECT player, teamid, coach, gtime
+FROM goal JOIN eteam
+ON teamid = id
+WHERE gtime <= 10
 
 /* Ex6. To JOIN game with eteam you could use either
 game JOIN eteam ON (team1=eteam.id) or game JOIN eteam ON (team2=eteam.id)
 Notice that because id is a column name in both game and eteam you must specify 
 eteam.id instead of just id. List the the dates of the matches and the name of 
 the team in which 'Fernando Santos' was the team1 coach. */
-SELECT a.mdate, b.teamname
-FROM game a
-JOIN eteam b
-ON (a.team1 = b.id)
-WHERE b.coach = 'Fernando Santos'
+SELECT mdate, teamname
+FROM game g JOIN eteam e
+ON g.team1 = e.id
+WHERE e.coach = 'Fernando Santos' 
 
 /* Ex7. List the player for every goal scored in a game where 
 the stadium was 'National Stadium, Warsaw'*/
-SELECT a.player
-FROM goal a
-JOIN game b
-ON (a.matchid = b.id)
-WHERE b.stadium = 'National Stadium, Warsaw'
+SELECT player
+FROM goal JOIN game
+ON matchid = id
+WHERE stadium = 'National Stadium, Warsaw'
 
 /* Ex8. The example query shows all goals scored in the 
 Germany-Greece quarterfinal.
@@ -81,46 +76,41 @@ Germany-Greece quarterfinal.
     FROM game JOIN goal ON matchid = id 
     WHERE (team1='GER' AND team2='GRE')
 Instead show the name of all players who scored a goal against Germany. */
-SELECT DISTINCT a.player
-FROM goal a
-JOIN game b
-ON (a.matchid = b.id)
-WHERE a.teamid <> 'GER' 
-AND ((b.team1 = 'GER') OR (b.team2 = 'GER'))
+SELECT DISTINCT player
+FROM goal JOIN game
+ON matchid = id
+WHERE (team1 = 'GER' OR team2 = 'GER')
+  AND teamid != 'GER'
 
 /* Ex9. Show teamname and the total number of goals scored. 
     COUNT and GROUP BY
 You should COUNT(*) in the SELECT line and GROUP BY teamname. */
-SELECT b.teamname, COUNT(*)
-FROM goal a
-JOIN eteam b
-ON (a.teamid = b.id)
-GROUP BY b.teamname
+SELECT teamname, COUNT(*)
+FROM goal JOIN eteam
+ON teamid = id
+GROUP BY teamname
 
 /* Ex10. Show the stadium and the number of goals scored in each stadium. */
-SELECT b.stadium, COUNT(*)
-FROM goal a
-JOIN game b
-ON (a.matchid = b.id)
-GROUP BY b.stadium
+SELECT stadium, COUNT(*)
+FROM goal JOIN game
+ON matchid = id
+GROUP BY stadium
 
 /* Ex11. For every match involving 'POL', 
 show the matchid, date and the number of goals scored. */
-SELECT a.matchid, b.mdate AS date, COUNT(*)
-FROM goal a
-JOIN game b
-ON (a.matchid = b.id)
-WHERE (b.team1 = 'POL') OR (b.team2 = 'POL')
-GROUP BY a.matchid, b.mdate
+SELECT matchid, mdate, COUNT(*)
+FROM game JOIN goal
+ON id = matchid
+WHERE team1 = 'POL' OR team2 = 'POL'
+GROUP BY matchid, mdate
 
 /* Ex12. For every match where 'GER' scored, 
 show matchid, match date and the number of goals scored by 'GER'. */
-SELECT a.matchid, b.mdate, COUNT(*)
-FROM goal a
-JOIN game b
-ON (a.matchid = b.id)
-WHERE a.teamid = 'GER'
-GROUP BY a.matchid, b.mdate
+SELECT matchid, mdate, COUNT(*)
+FROM game JOIN goal
+ON id = matchid
+WHERE teamid = 'GER'
+GROUP BY matchid, mdate
 
 /* Ex13. List every match with the goals scored by each team as shown. 
 This will use "CASE WHEN" 

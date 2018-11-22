@@ -21,8 +21,10 @@ FROM game
 WHERE id = 1012
 
 /* Ex3. You can combine the two steps into a single query with a JOIN.
+
     SELECT *
     FROM game JOIN goal ON (id=matchid) 
+
 The FROM clause says to merge data from the goal table with that 
 from the game table. 
 The ON says how to figure out which rows in game go with which rows in goal - 
@@ -116,7 +118,7 @@ GROUP BY matchid, mdate
 This will use "CASE WHEN" 
     CASE WHEN condition1 THEN value1 
          WHEN condition2 THEN value2  
-         ELSE def_value END
+    ELSE def_value END
 which has not been explained in any previous exercises. 
 Notice in the query given every goal is listed. 
 If it was a team1 goal then a 1 appears in score1, 

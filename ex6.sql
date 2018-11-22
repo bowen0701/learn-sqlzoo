@@ -85,20 +85,20 @@ WHERE (team1 = 'GER' OR team2 = 'GER')
 /* Ex9. Show teamname and the total number of goals scored. 
     COUNT and GROUP BY
 You should COUNT(*) in the SELECT line and GROUP BY teamname. */
-SELECT teamname, COUNT(*)
+SELECT teamname, COUNT(*) AS num_goals
 FROM goal JOIN eteam
 ON teamid = id
 GROUP BY teamname
 
 /* Ex10. Show the stadium and the number of goals scored in each stadium. */
-SELECT stadium, COUNT(*)
+SELECT stadium, COUNT(*) AS num_goals
 FROM goal JOIN game
 ON matchid = id
 GROUP BY stadium
 
 /* Ex11. For every match involving 'POL', 
 show the matchid, date and the number of goals scored. */
-SELECT matchid, mdate, COUNT(*)
+SELECT matchid, mdate, COUNT(*) AS num_goals
 FROM game JOIN goal
 ON id = matchid
 WHERE team1 = 'POL' OR team2 = 'POL'
@@ -106,7 +106,7 @@ GROUP BY matchid, mdate
 
 /* Ex12. For every match where 'GER' scored, 
 show matchid, match date and the number of goals scored by 'GER'. */
-SELECT matchid, mdate, COUNT(*)
+SELECT matchid, mdate, COUNT(*) AS num_goals
 FROM game JOIN goal
 ON id = matchid
 WHERE teamid = 'GER'
@@ -123,11 +123,11 @@ If it was a team1 goal then a 1 appears in score1,
 otherwise there is a 0. 
 You could SUM this column to get a count of the goals scored by team1. 
 Sort your result by mdate, team1 and team2. */
-SELECT a.mdate, 
-       a.team1, SUM(CASE WHEN a.team1 = b.teamid THEN 1 ELSE 0 END) AS score1, 
-       a.team2, SUM(CASE WHEN a.team2 = b.teamid THEN 1 ELSE 0 END) AS score2
-FROM game a
-LEFT JOIN goal b
-ON (a.id = b.matchid)
-GROUP BY a.mdate, a.team1, a.team2
-ORDER BY a.mdate, a.team1, a.team2
+SELECT 
+  mdate, 
+  team1, SUM(CASE WHEN team1 = teamid THEN 1 ELSE 0 END) AS score1, 
+  team2, SUM(CASE WHEN team2 = teamid THEN 1 ELSE 0 END) AS score2
+FROM game LEFT JOIN goal
+ON id = matchid
+GROUP BY mdate, team1, team2
+ORDER BY mdate, matchid, team1, team2

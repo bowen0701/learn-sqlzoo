@@ -53,55 +53,50 @@ WHERE movieid =
 
 /* Ex8. List the films in which 'Harrison Ford' has appeared. */
 SELECT title
-FROM movie
-WHERE id IN
-    (SELECT movieid
-     FROM casting
-     WHERE actorid = 
-        (SELECT id
-         FROM actor
-         WHERE name = 'Harrison Ford'))
+FROM movie m RIGHT JOIN casting c
+ON m.id = c.movieid
+WHERE actorid = 
+  (SELECT id
+   FROM actor
+   WHERE name = 'Harrison Ford')
 
 /* Ex9. List the films where 'Harrison Ford' has appeared - 
 but not in the starring role. 
 [Note: the ord field of casting gives the position of the actor. 
 If ord=1 then this actor is in the starring role] */
 SELECT title
-FROM movie
-WHERE id IN
-    (SELECT movieid
-     FROM casting
-     WHERE actorid = 
-        (SELECT id
-         FROM actor
-         WHERE name = 'Harrison Ford')
-         AND ord <> 1)
+FROM movie m RIGHT JOIN casting c
+ON m.id = c.movieid
+WHERE actorid = 
+  (SELECT id
+   FROM actor
+   WHERE name = 'Harrison Ford')
+  AND ord <> 1
 
 /* Ex10. List the films together with the leading star for all 1962 films. */
-SELECT d.title, c.name
-FROM movie d
-JOIN (SELECT a.*, b.name
-      FROM casting a
-      JOIN actor b
-      ON (a.actorid = b.id)
-      WHERE a.ord = 1) c
-ON (d.id = c. movieid)
-WHERE d.yr = 1962
+SELECT title, name
+FROM movie m RIGHT JOIN 
+  (SELECT c.*, a.*
+   FROM casting c JOIN actor a
+   ON c.actorid = a.id) t
+ON m.id = t.movieid
+WHERE m.yr = 1962 
+  AND t.ord = 1
 
 /* Ex11. Which were the busiest years for 'John Travolta', 
 show the year and the number of movies he made each year for any year 
 in which he made more than 2 movies. */
-SELECT yr, COUNT(title)
-FROM movie
-WHERE id IN
-    (SELECT movieid
-     FROM casting
-     WHERE actorid = 
-         (SELECT id
-          FROM actor
-          WHERE name = 'John Travolta'))
+SELECT yr, COUNT(*) AS num_movies
+FROM 
+  (SELECT m.*, t.*
+   FROM movie m RIGHT JOIN
+     (SELECT movieid, actorid, name, ord
+      FROM actor a JOIN casting c
+      ON a.id = c.actorid) t
+   ON m.id = t.movieid
+   WHERE name = 'John Travolta') jt
 GROUP BY yr
-Having COUNT(title) > 2
+HAVING num_movies > 2
 
 /* Ex12. List the film title and the leading actor for all of the films 
 'Julie Andrews' played in. */

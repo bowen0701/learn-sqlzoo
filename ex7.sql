@@ -102,58 +102,59 @@ HAVING num_movies > 2
 'Julie Andrews' played in. */
 SELECT title, name
 FROM
-    (SELECT movieid, actorid
-     FROM casting
-     WHERE movieid IN
-        (SELECT movieid FROM casting
-         WHERE actorid IN (
-         SELECT id FROM actor
-         WHERE name='Julie Andrews'))
-    AND ord = 1) a
-JOIN actor b
-ON a.actorid = b.id
-JOIN movie c
-ON a.movieid = c.id
+  (SELECT movieid, actorid
+   FROM casting
+   WHERE 
+     movieid IN
+       (SELECT movieid 
+        FROM casting
+        WHERE actorid IN 
+          (SELECT id FROM actor
+           WHERE name = 'Julie Andrews'))
+      AND ord = 1) c
+JOIN actor a
+ON c.actorid = a.id
+JOIN movie m
+ON c.movieid = m.id
 
 /* Ex13. Obtain a list, in alphabetical order, 
 of actors who've had at least 30 starring roles. */
-SELECT b.name
-FROM
-    (SELECT actorid
-     FROM casting
-     WHERE ord = 1
-     GROUP BY actorid
-     Having COUNT(*) >= 30) a
-LEFT JOIN actor b
-ON (a.actorid = b.id)
-ORDER BY b.name
+SELECT name
+FROM 
+  (SELECT actorid
+   FROM casting
+   WHERE ord = 1
+   GROUP BY actorid
+   HAVING COUNT(movieid) >= 30) s
+JOIN actor a
+ON s.actorid = a.id
+ORDER BY name
 
 /* Ex14. List the films released in the year 1978 ordered by the 
 number of actors in the cast, then by title. */
-SELECT a.title, b.actor_cnt
-FROM movie a
-JOIN
-(SELECT movieid, COUNT(actorid) AS actor_cnt
- FROM casting
- GROUP BY movieid) b
-ON a.id = b.movieid
-WHERE a.yr = 1978
+SELECT title, COUNT(actorid) AS num_actors
+FROM 
+  (SELECT *
+   FROM movie
+   WHERE yr = 1978) m
+JOIN casting c
+ON m.id = c.movieid
+GROUP BY title
+ORDER BY num_actors DESC, title
       
 /* Ex15. List all the people who have worked with 'Art Garfunkel'. */
-SELECT name 
-FROM actor
-WHERE id IN
-    (SELECT actorid
-     FROM casting
-     WHERE movieid IN
-         (SELECT DISTINCT movieid
-          FROM casting
-          WHERE actorid IN
-              (SELECT id
-               FROM actor
-               WHERE name = 'Art Garfunkel')))
-AND id <> 
-    (SELECT id
-     FROM actor
-     WHERE name = 'Art Garfunkel')
-
+SELECT name
+FROM
+  (SELECT actorid
+   FROM casting
+   WHERE movieid IN 
+     (SELECT movieid
+      FROM
+        (SELECT id
+         FROM actor
+         WHERE name = 'Art Garfunkel') s
+      JOIN casting c
+      ON s.id = c.actorid)) q
+JOIN actor a
+ON q.actorid = a.id
+WHERE a.name <> 'Art Garfunkel'

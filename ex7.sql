@@ -38,27 +38,21 @@ SELECT name
 FROM actor a RIGHT JOIN casting c
 ON a.id = c.actorid 
 WHERE movieid = 
-  (SELECT id 
-   FROM movie
-   WHERE title = 'Casablanca')
+  (SELECT id FROM movie WHERE title = 'Casablanca')
 
 /* Ex7. Obtain the cast list for the film 'Alien'. */
 SELECT name
 FROM actor a RIGHT JOIN casting c
 ON a.id = c.actorid
 WHERE movieid = 
-  (SELECT id
-   FROM movie
-   WHERE title = 'Alien')
+  (SELECT id FROM movie WHERE title = 'Alien')
 
 /* Ex8. List the films in which 'Harrison Ford' has appeared. */
 SELECT title
 FROM movie m RIGHT JOIN casting c
 ON m.id = c.movieid
 WHERE actorid = 
-  (SELECT id
-   FROM actor
-   WHERE name = 'Harrison Ford')
+  (SELECT id FROM actor WHERE name = 'Harrison Ford')
 
 /* Ex9. List the films where 'Harrison Ford' has appeared - 
 but not in the starring role. 
@@ -68,9 +62,7 @@ SELECT title
 FROM movie m RIGHT JOIN casting c
 ON m.id = c.movieid
 WHERE actorid = 
-  (SELECT id
-   FROM actor
-   WHERE name = 'Harrison Ford')
+  (SELECT id FROM actor WHERE name = 'Harrison Ford')
   AND ord <> 1
 
 /* Ex10. List the films together with the leading star for all 1962 films. */
@@ -109,8 +101,7 @@ FROM
        (SELECT movieid 
         FROM casting
         WHERE actorid IN 
-          (SELECT id FROM actor
-           WHERE name = 'Julie Andrews'))
+          (SELECT id FROM actor WHERE name = 'Julie Andrews'))
       AND ord = 1) c
 JOIN actor a
 ON c.actorid = a.id
@@ -134,9 +125,7 @@ ORDER BY name
 number of actors in the cast, then by title. */
 SELECT title, COUNT(actorid) AS num_actors
 FROM 
-  (SELECT *
-   FROM movie
-   WHERE yr = 1978) m
+  (SELECT * FROM movie WHERE yr = 1978) m
 JOIN casting c
 ON m.id = c.movieid
 GROUP BY title
@@ -150,9 +139,7 @@ FROM
    WHERE movieid IN 
      (SELECT movieid
       FROM
-        (SELECT id
-         FROM actor
-         WHERE name = 'Art Garfunkel') s
+        (SELECT id FROM actor WHERE name = 'Art Garfunkel') s
       JOIN casting c
       ON s.id = c.actorid)) q
 JOIN actor a

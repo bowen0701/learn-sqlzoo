@@ -34,7 +34,7 @@ GROUP BY continent
 with populations of at least 10 million. */
 SELECT continent, COUNT(name)
 FROM world
-WHERE population >= 1E7
+WHERE population >= 10E6
 GROUP BY continent
 
 /* Ex8. List the continents that have a total population of 
@@ -42,4 +42,4 @@ at least 100 million. */
 SELECT continent
 FROM world
 GROUP BY continent
-Having SUM(population) >= 1E8
+HAVING SUM(population) >= 100E6

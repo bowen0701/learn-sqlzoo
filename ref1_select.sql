@@ -73,7 +73,7 @@ We have a self join, each copy of the table is given an "alias" -
 here we use w for the worker and b for the boss. We can treat these as 
 different tables. You get an inner join by default - this means that Robin 
 (who has no boss) does not show up in the results. */
-CREATE TABLE employee(
+CREATE TABLE employee (
   employee_id INTEGER PRIMARY KEY,
   first_name VARCHAR(10),
   dept_code VARCHAR(10),

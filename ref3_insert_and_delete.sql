@@ -1,4 +1,4 @@
-/* Reference 2. INSERT and DELETE Reference
+/* Reference 3. INSERT and DELETE Reference
 
 How to put records into a table, change them and how to take them out again. */
 

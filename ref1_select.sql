@@ -77,7 +77,7 @@ CREATE TABLE employee (
   employee_id INTEGER PRIMARY KEY,
   first_name VARCHAR(10),
   dept_code VARCHAR(10),
-  manager_id INTEGER REFERENCES employee);
+  manager_id INTEGER REFERENCES employee_id);
 
 INSERT INTO employee VALUES (1, 'Robin', 'Eng', NULL);
 INSERT INTO employee VALUES (2, 'Jon', 'SoC', 1);

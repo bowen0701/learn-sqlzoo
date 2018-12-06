@@ -47,4 +47,4 @@ SET PASSWORD FOR scott@localhost = password('tiger')
 
 /* Who am I - what is my user id?
 Find the user name or user id. The SQL standard permits the function USER */
-SELECT user()
+SELECT USER()

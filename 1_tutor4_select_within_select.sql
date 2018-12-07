@@ -63,10 +63,9 @@ show the continent, the name and the area: */
 SELECT continent, name, area
 FROM world w1
 WHERE area >= ALL(
-  SELECT area 
+  SELECT area
   FROM world w2
-  WHERE w1.continent = w2.continent 
-    AND population > 0)
+  WHERE w1.continent = w2.continent)
 
 /* Ex8. List each continent and the name of the country that 
 comes first alphabetically. */

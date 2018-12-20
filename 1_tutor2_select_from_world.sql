@@ -46,7 +46,7 @@ Show the countries that are big by area or big by population.
 Show name, population and area. */
 SELECT name, population, area
 FROM world
-WHERE area > 3E6 OR population > 2.5E8
+WHERE area > 3E6 OR population > 250E6
 
 /* Ex8. Exclusive OR (XOR). 
 Show the countries that are big by area or big by population but not both. 
@@ -57,7 +57,7 @@ China has a big population and big area, it should be excluded.
 United Kingdom has a small population and a small area, it should be excluded. */
 SELECT name, population, area
 FROM world
-WHERE area > 3E6 OR population > 2.5E8
+WHERE area > 3E6 XOR population > 250E6
 
 /* Ex9. Show the name and population in millions and the 
 GDP in billions for the countries of the continent 'South America'. 
@@ -111,10 +111,9 @@ The query shown misses countries like Bahamas and Belarus
 because they contain at least one 'a'. */
 SELECT name
 FROM world
-WHERE 
-  name LIKE '%a%'
-    AND name LIKE '%e%'
-    AND name LIKE '%i%'
-    AND name LIKE '%o%'
-    AND name LIKE '%u%'
-    AND name NOT LIKE '% %'
+WHERE name LIKE '%a%'
+  AND name LIKE '%e%'
+  AND name LIKE '%i%'
+  AND name LIKE '%o%'
+  AND name LIKE '%u%'
+  AND name NOT LIKE '% %'

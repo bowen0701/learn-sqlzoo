@@ -5,28 +5,30 @@ http://sqlzoo.net/wiki/SELECT_within_SELECT_Tutorial */
 larger than that of 'Russia'. */
 SELECT name
 FROM world
-WHERE population >
-  (SELECT population FROM world WHERE name = 'Russia')
+WHERE population > (
+  SELECT population 
+  FROM world 
+  WHERE name = 'Russia')
 
 /* Ex2 Show the countries in Europe with a per capita GDP 
 greater than 'United Kingdom'. */
 SELECT name
 FROM world
 WHERE continent = 'Europe'
-  AND  gdp / population >
-    (SELECT gdp / population 
-     FROM world 
-     WHERE name = 'United Kingdom')
+  AND gdp / population > (
+    SELECT gdp / population
+    FROM world
+    WHERE name = 'United Kingdom')
 
 /* Ex3. List the name and continent of countries in the continents 
 containing either Argentina or Australia. 
 Order by name of the country. */
 SELECT name, continent
-FROM world
-WHERE continent IN
-  (SELECT DISTINCT continent
-   FROM world
-   WHERE name IN ('Argentina', 'Australia'))
+FROM world w1
+WHERE continent IN (
+  SELECT continent
+  FROM world
+  WHERE name IN ('Argentina', 'Australia'))
 ORDER BY name
 
 /* Ex4. Which country has a population that is more than Canada 
@@ -34,20 +36,25 @@ but less than Poland? Show the name and the population. */
 SELECT name, population
 FROM world
 WHERE 
-  population >
-    (SELECT population FROM world WHERE name = 'Canada')
-  AND population <
-    (SELECT population FROM world WHERE name = 'Poland')
+  population > (
+    SELECT population
+    FROM world
+    WHERE name = 'Canada')
+  AND population < (
+    SELECT population
+    FROM world
+    WHERE name = 'Poland') 
 
 /* Ex5. Germany (population 80 million) has the largest population of 
 the countries in Europe. Austria (population 8.5 million) has 
 11% of the population of Germany.
 Show the name and the population of each country in Europe. 
 Show the population as a percentage of the population of Germany. */
-SELECT
+SELECT 
   name,
-  CONCAT(ROUND(population / 
-    (SELECT population FROM world WHERE name = 'Germany') * 100, 0), '%')
+  CONCAT(ROUND(population / (
+    SELECT population FROM world WHERE name = 'Germany') * 100, 0), '%') 
+    AS percent_of_germany
 FROM world
 WHERE continent = 'Europe'
 
@@ -56,7 +63,10 @@ WHERE continent = 'Europe'
 SELECT name
 FROM world
 WHERE gdp > ALL(
-  SELECT gdp FROM world WHERE continent = 'Europe' AND gdp > 0)
+  SELECT gdp
+  FROM world
+  WHERE continent = 'Europe'
+    AND gdp IS NOT NULL)
 
 /* Ex7. Find the largest country (by area) in each continent, 
 show the continent, the name and the area: */
@@ -81,13 +91,13 @@ Then find the names of the countries associated with these continents.
 Show name, continent and population.*/
 SELECT name, continent, population
 FROM world
-WHERE continent IN
-  (SELECT DISTINCT continent
-   FROM world w1
-   WHERE 2.5E7 >= ALL(
-     SELECT population 
-     FROM world w2
-     WHERE w1.continent = w2.continent))
+WHERE continent IN (
+  SELECT DISTINCT continent
+  FROM world w1
+  WHERE 25E6 >= ALL(
+    SELECT population
+    FROM world w2
+    WHERE w1.continent = w2.continent))
 
 /* Ex10. Some countries have populations more than three times that 
 of any of their neighbours (in the same continent). 

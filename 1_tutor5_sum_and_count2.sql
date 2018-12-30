@@ -40,13 +40,13 @@ GROUP BY subject
 
 /* Ex7.
 Show the number of different winners for each subject. */
-SELECT subject, COUNT(DISTINCT winner)
+SELECT subject, COUNT(DISTINCT(winner))
 FROM nobel
 GROUP BY subject
 
 /* Ex8.
 For each subject show how many years have had prizes awarded. */
-SELECT subject, COUNT(DISTINCT yr)
+SELECT subject, COUNT(DISTINCT(yr))
 FROM nobel
 GROUP BY subject
 
@@ -55,7 +55,7 @@ Show the years in which three prizes were given for Physics. */
 SELECT yr
 FROM nobel
 WHERE subject = 'Physics'
-GROUP BY subject, yr
+GROUP BY yr
 HAVING COUNT(winner) = 3
 
 /* Ex10.
@@ -63,7 +63,7 @@ Show winners who have won more than once. */
 SELECT winner
 FROM nobel
 GROUP BY winner
-HAVING COUNT(yr) > 1
+HAVING COUNT(*) > 1
 
 /* Ex11.
 Show winners who have won more than one subject. */

@@ -51,13 +51,14 @@ FROM album a JOIN track t
 ON a.asin = t.album
 WHERE song LIKE '%Heart%'
 GROUP BY title
+HAVING COUNT(song) > 0
 
 /* Ex6.
 A "title track" is where the song is the same as the title. Find the title tracks. */
 SELECT song
 FROM album a JOIN track t
 ON a.asin = t.album
-WHERE a.title = t.song
+WHERE title = song
 
 /* Ex7.
 An "eponymous" album is one where the title is the same as the artist (for example the album 'Blur' by the band 'Blur'). Show the eponymous albums.
@@ -85,7 +86,7 @@ SELECT title, price, COUNT(song)
 FROM album a JOIN track t
 ON a.asin = t.album
 GROUP BY title, price
-HAVING price / COUNT(song) < 0.5
+HAVING price / COUNT(song) < 0.50
 
 /* Ex10.
 Wagner's Ring cycle has an imposing 173 tracks, Bing Crosby clocks up 101 tracks.

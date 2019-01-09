@@ -47,9 +47,8 @@ WHERE leader IS NOT NULL
 /* Ex4.
 Obtain a list of all parties which have at least one MSP. */
 SELECT p.name
-FROM msp m JOIN party p
-ON m.party = p.code
-WHERE party IS NOT NULL
+FROM party p JOIN msp m
+ON p.code = m.party
 GROUP BY p.name
 HAVING COUNT(m.name) >= 1
 
@@ -65,9 +64,8 @@ ORDER BY m.name
 /* Ex6.
 Obtain a list of parties which have MSPs, include the number of MSPs. */
 SELECT p.name, COUNT(m.name)
-FROM party p RIGHT JOIN msp m
+FROM party p JOIN msp m
 ON p.code = m.party
-WHERE p.name IS NOT NULL
 GROUP BY p.name
 
 /* Ex7.

@@ -58,7 +58,7 @@ SELECT
   name,
   CONCAT(ROUND(population / (
     SELECT population FROM world WHERE name = 'Germany') * 100, 0), '%') 
-    AS percent_of_germany
+    AS population_as_percent_of_germany
 FROM world
 WHERE continent = 'Europe'
 

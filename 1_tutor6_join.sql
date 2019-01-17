@@ -34,8 +34,8 @@ the id from goal must match matchid from game.
     ON (game.id=goal.matchid)
 Modify it to show the player, teamid, stadium and mdate for every German goal. */
 SELECT player, teamid, stadium, mdate
-FROM goal JOIN game 
-ON goal.matchid = game.id
+FROM goal go JOIN game ga
+ON go.matchid = ga.id
 WHERE teamid = 'GER'
 
 
@@ -43,10 +43,9 @@ WHERE teamid = 'GER'
 Show the team1, team2 and player for every goal scored 
 by a player called Mario player LIKE 'Mario%' */
 SELECT team1, team2, player
-FROM goal JOIN game
-ON goal.matchid = game.id
+FROM goal go JOIN game ga
+ON go.matchid = ga.id
 WHERE player LIKE 'Mario %'
-
 
 /* Ex5. The table eteam gives details of every national team 
 including the coach. You can JOIN goal to eteam using the phrase 
@@ -54,8 +53,8 @@ goal JOIN eteam on teamid=id.
 Show player, teamid, coach, gtime for all goals scored 
 in the first 10 minutes gtime<=10. */
 SELECT player, teamid, coach, gtime
-FROM goal JOIN eteam
-ON goal.teamid = eteam.id
+FROM goal g JOIN eteam e
+ON g.teamid = e.id
 WHERE gtime <= 10
 
 
@@ -65,16 +64,16 @@ Notice that because id is a column name in both game and eteam you must specify
 eteam.id instead of just id. List the the dates of the matches and the name of 
 the team in which 'Fernando Santos' was the team1 coach. */
 SELECT mdate, teamname
-FROM game JOIN eteam
-ON game.team1 = eteam.id
+FROM game g JOIN eteam e
+ON g.team1 = e.id
 WHERE coach = 'Fernando Santos'
 
 
 /* Ex7. List the player for every goal scored in a game where 
 the stadium was 'National Stadium, Warsaw'*/
 SELECT player
-FROM game JOIN goal
-ON game.id = goal.matchid
+FROM goal go JOIN game ga
+ON go.matchid = ga.id
 WHERE stadium = 'National Stadium, Warsaw'
 
 
@@ -85,32 +84,33 @@ Germany-Greece quarterfinal.
     WHERE (team1='GER' AND team2='GRE')
 Instead show the name of all players who scored a goal against Germany. */
 SELECT DISTINCT player
-FROM goal JOIN game
-ON goal.matchid = game.id
-WHERE teamid <> 'GER'
-  AND (team1 = 'GER' OR team2 = 'GER')
+FROM goal go JOIN game ga
+ON go.matchid = ga.id
+WHERE teamid <> 'GER' 
+  AND (team1 = 'GER' OR team2 = 'GER') 
 
 
 /* Ex9. Show teamname and the total number of goals scored. 
     COUNT and GROUP BY
 You should COUNT(*) in the SELECT line and GROUP BY teamname. */
 SELECT teamname, COUNT(*)
-FROM goal JOIN eteam
-ON goal.teamid = eteam.id
+FROM goal g JOIN eteam e
+ON g.teamid = e.id
 GROUP BY teamname
+
 
 /* Ex10. Show the stadium and the number of goals scored in each stadium. */
 SELECT stadium, COUNT(*)
-FROM game JOIN goal
-ON game.id = goal.matchid
+FROM goal go JOIN game ga
+ON go.matchid = ga.id
 GROUP BY stadium
 
 
 /* Ex11. For every match involving 'POL', 
 show the matchid, date and the number of goals scored. */
 SELECT matchid, mdate, COUNT(*)
-FROM game JOIN goal
-ON game.id = goal.matchid
+FROM goal go JOIN game ga
+ON go.matchid = ga.id
 WHERE team1 = 'POL' OR team2 = 'POL'
 GROUP BY matchid, mdate
 
@@ -118,8 +118,8 @@ GROUP BY matchid, mdate
 /* Ex12. For every match where 'GER' scored, 
 show matchid, match date and the number of goals scored by 'GER'. */
 SELECT matchid, mdate, COUNT(*)
-FROM goal JOIN game
-ON goal.matchid = game.id
+FROM goal go JOIN game ga
+ON go.matchid = ga.id
 WHERE teamid = 'GER'
 GROUP BY matchid, mdate
 
@@ -135,15 +135,13 @@ If it was a team1 goal then a 1 appears in score1,
 otherwise there is a 0. 
 You could SUM this column to get a count of the goals scored by team1. 
 Sort your result by mdate, team1 and team2. */
-SELECT 
+SELECT
   mdate,
   team1,
-  SUM(CASE WHEN goal.teamid = game.team1 
-    THEN 1 ELSE 0 END) AS score1,
+  SUM(CASE WHEN team1 = teamid THEN 1 ELSE 0 END) AS score1,
   team2,
-  SUM(CASE WHEN goal.teamid = game.team2
-    THEN 1 ELSE 0 END) AS score2
-FROM game LEFT JOIN goal
-ON game.id = goal.matchid
+  SUM(CASE WHEN team2 = teamid THEN 1 ELSE 0 END) AS score2
+FROM goal go RIGHT JOIN game ga
+ON go.matchid = ga.id
 GROUP BY mdate, team1, team2
 ORDER BY mdate, matchid, team1, team2

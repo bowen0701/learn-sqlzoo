@@ -152,7 +152,7 @@ WHERE movieid IN (
     SELECT id FROM actor WHERE name = 'Art Garfunkel'))
   AND name <> 'Art Garfunkel'
 
--- Alternative answer.
+-- Alternative answer by self-join.
 SELECT DISTINCT name
 FROM casting c1 JOIN casting c2
 ON c1.movieid = c2.movieid

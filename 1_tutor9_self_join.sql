@@ -18,8 +18,8 @@ WHERE name = 'Craiglockhart'
 
 /* Ex3. Give the id and the name for the stops on the '4' 'LRT' service. */
 SELECT id, name
-FROM stops s JOIN route r
-ON s.id = r.stop
+FROM route r JOIN stops s
+ON r.stop = s.id
 WHERE num = '4'
   AND company = 'LRT'
 
@@ -43,9 +43,9 @@ FROM route r1 JOIN route r2
 ON r1.company = r2.company
   AND r1.num = r2.num
 WHERE r1.stop = (
-  SELECT id FROM stops WHERE name = 'Craiglockhart')
+    SELECT id FROM stops WHERE name = 'Craiglockhart')
   AND r2.stop = (
-  SELECT id FROM stops WHERE name = 'London Road')
+    SELECT id FROM stops WHERE name = 'London Road')
 
 
 /* Ex6. The query shown is similar to the previous one, however by joining two copies 
@@ -109,19 +109,19 @@ Self-join twice to find buses that visit Craiglockhart and Sighthill, then
 join those on matching stops. */
 SELECT t1.num, t1.company, t1.name, t2.num, t2.company
 FROM (
-  SELECT r1.num, r1.company, s2.name
+  SELECT r1.company, r1.num, s2.name
   FROM route r1 JOIN route r2
-  ON r1.num = r2.num
-    AND r1.company = r2.company
+  ON r1.company = r2.company
+    AND r1.num = r2.num
   JOIN stops s2
   ON r2.stop = s2.id
   WHERE r1.stop = (
     SELECT id FROM stops WHERE name = 'Craiglockhart')) t1
 JOIN (
-  SELECT r1.num, r1.company, s1.name
+  SELECT r1.company, r1.num, s1.name
   FROM route r1 JOIN route r2
-  ON r1.num = r2.num
-    AND r1.company = r2.company
+  ON r1.company = r2.company
+    AND r1.num = r2.num
   JOIN stops s1
   ON r1.stop = s1.id
   WHERE r2.stop = (

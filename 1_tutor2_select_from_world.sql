@@ -42,7 +42,7 @@ WHERE name IN ('France', 'Germany', 'Italy')
 /* Ex6. Show the countries which have a name that includes the word 'United'. */
 SELECT name
 FROM world
-WHERE name like '%United%'
+WHERE name LIKE '%United%'
 
 
 /* Ex7. Two ways to be big: 

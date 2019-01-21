@@ -26,9 +26,9 @@ WHERE continent = 'Europe'
 containing either Argentina or Australia. 
 Order by name of the country. */
 SELECT name, continent
-FROM world w1
+FROM world
 WHERE continent IN (
-  SELECT continent
+  SELECT DISTINCT continent
   FROM world
   WHERE name IN ('Argentina', 'Australia'))
 ORDER BY name

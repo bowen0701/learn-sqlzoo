@@ -40,7 +40,8 @@ what is a cast list?
 The cast list is the names of the actors who were in the movie.
 Use movieid=11768, (or whatever value you got from the previous question) */
 SELECT name
-FROM casting c JOIN actor a
+FROM casting c
+JOIN actor a
 ON c.actorid = a.id
 WHERE movieid = (
   SELECT id 
@@ -50,7 +51,8 @@ WHERE movieid = (
 
 /* Ex7. Obtain the cast list for the film 'Alien'. */
 SELECT name
-FROM casting c JOIN actor a
+FROM casting c
+JOIN actor a
 ON c.actorid = a.id
 WHERE movieid = (
   SELECT id
@@ -60,7 +62,8 @@ WHERE movieid = (
 
 /* Ex8. List the films in which 'Harrison Ford' has appeared. */
 SELECT title
-FROM casting c JOIN movie m
+FROM casting c
+JOIN movie m
 ON c.movieid = m.id
 WHERE actorid = (
   SELECT id
@@ -73,7 +76,8 @@ but not in the starring role.
 [Note: the ord field of casting gives the position of the actor. 
 If ord=1 then this actor is in the starring role] */
 SELECT title
-FROM casting c JOIN movie m
+FROM casting c
+JOIN movie m
 ON c.movieid = m.id
 WHERE actorid = (
   SELECT id
@@ -84,7 +88,8 @@ WHERE actorid = (
 
 /* Ex10. List the films together with the leading star for all 1962 films. */
 SELECT title, name
-FROM casting c JOIN movie m
+FROM casting c
+JOIN movie m
 ON c.movieid = m.id
 JOIN actor a
 ON c.actorid = a.id
@@ -96,7 +101,8 @@ WHERE yr = 1962
 show the year and the number of movies he made each year for any year 
 in which he made more than 2 movies. */
 SELECT yr, COUNT(title)
-FROM casting c JOIN actor a
+FROM casting c
+JOIN actor a
 ON c.actorid = a.id
 JOIN movie m
 ON c.movieid = m.id
@@ -108,7 +114,8 @@ HAVING COUNT(title) > 2
 /* Ex12. List the film title and the leading actor for all of the films 
 'Julie Andrews' played in. */
 SELECT title, name
-FROM casting c JOIN actor a
+FROM casting c
+JOIN actor a
 ON c.actorid = a.id
 JOIN movie m
 ON c.movieid = m.id
@@ -123,7 +130,8 @@ WHERE movieid IN (
 /* Ex13. Obtain a list, in alphabetical order, 
 of actors who've had at least 30 starring roles. */
 SELECT name
-FROM casting c JOIN actor a
+FROM casting c
+JOIN actor a
 ON c.actorid = a.id
 WHERE ord = 1
 GROUP BY name
@@ -134,7 +142,8 @@ ORDER BY name
 /* Ex14. List the films released in the year 1978 ordered by the 
 number of actors in the cast, then by title. */
 SELECT title, COUNT(actorid)
-FROM casting c JOIN movie m
+FROM casting c
+JOIN movie m
 ON c.movieid = m.id
 WHERE yr = 1978
 GROUP BY title
@@ -143,7 +152,8 @@ ORDER BY COUNT(actorid) DESC, title
 
 /* Ex15. List all the people who have worked with 'Art Garfunkel'. */
 SELECT name
-FROM casting c JOIN actor a
+FROM casting c
+JOIN actor a
 ON c.actorid = a.id
 WHERE movieid IN (
   SELECT movieid
@@ -154,7 +164,8 @@ WHERE movieid IN (
 
 -- Alternative answer by self-join.
 SELECT DISTINCT name
-FROM casting c1 JOIN casting c2
+FROM casting c1
+JOIN casting c2
 ON c1.movieid = c2.movieid
 JOIN actor a
 ON c2.actorid = a.id
